@@ -3,13 +3,13 @@ Meeting Minutes: 9/23/19
 7 minutes
 
 Roles: 	
-	Andrew - Puns, Front End
-	John - Front End, Python
-	Mikaela - Python
-	Ethan - Python
+	Andrew - HTML parsing
+	John - Back-end and code management
+	Mikaela - Back-end
+	Ethan - Networking
 
 individual Goals:	
-	Andrew - 
-	John - 
-	Mikaela - 
-	Ethan - 
+	Andrew - Get better at Python, vertical testing
+	John - Python APIs, better front end code style
+	Mikaela - Writing more efficient code, get better at testing
+	Ethan - Get better at writing tests/testing, get better at working w/ other teams
