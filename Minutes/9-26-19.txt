@@ -1,0 +1,14 @@
+Meeting Minutes: 9/26/19
+
+Design:
+    What are we trying to build?
+        - 
+    How do we know it works?
+        - 
+    How do we know it scales?
+        - 
+    Ethical considerations?
+        - 
+
+Architecture:
+    - 

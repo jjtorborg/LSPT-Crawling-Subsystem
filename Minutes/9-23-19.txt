@@ -8,7 +8,7 @@ Roles:
 	Mikaela - Back-end
 	Ethan - Networking
 
-individual Goals:	
+Individual Goals:	
 	Andrew - Get better at Python, vertical testing
 	John - Python APIs, better front end code style
 	Mikaela - Writing more efficient code, get better at testing
