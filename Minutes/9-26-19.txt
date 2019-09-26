@@ -2,7 +2,9 @@ Meeting Minutes: 9/26/19
 
 Design:
     What are we trying to build?
-        - 
+        - A crawler that acquires documents from URLs
+	- Works within ethical standards like robots.txt
+	- Sends either documents or links back to Link Analysis
     How do we know it works?
         - 
     How do we know it scales?
@@ -11,4 +13,7 @@ Design:
         - 
 
 Architecture:
-    - 
+    - Takes in a URL (and maybe a frequency to poll)
+    - Sends list of links to Link Analysis
+    - Sends full text (HTML) to Text Transformation
+    
