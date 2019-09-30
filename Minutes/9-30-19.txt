@@ -30,4 +30,7 @@ Ideas:
               Timestamp of when page was accessed
               URL that was crawled
               HTML source of the resource
-              Array of links on the page
+              Array of unique links on the page, filtering out irrelevant or extraneous links as defined by the project scope
+              
+- Other considerations:
+  o We may need to filter out extraneous links before sending back to link analysis
