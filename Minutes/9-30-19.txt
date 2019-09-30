@@ -1,0 +1,33 @@
+-- Discussion of ideas for search engine requirements --
+Ideas:
+- Searches only material related Shirley Ann Jackson (Dr.)
+- Crawl through fake news
+- Search through RPI-published papers
+- Search Folsom library resources
+- Filter out fake reviews on Amazon
+
+-- Design Questions --
+1. What are we trying to build?
+- A crawler that takes in a URL and returns the text for that resource if it can be accessed, or a list of links on that page
+2. How do we know it will work?
+- The subsystem returns the correct output from a given URL
+- The subsystem returns all the URLs in a single page
+3. How do we know it will scale up?
+- It is modular
+- It will run on docker
+- We run performance and integration tests on it
+- Soak tests
+4. Ethical considerations?
+- Abide by policies in robots.txt
+- Take as input a max polling frequency from link analysis
+
+-- API --
+- Method call:
+  o Given:  URL of a resource
+            Priority (possibly NOT in MVL)
+            List/dict of properties to return (i.e. if they only want a list of links or only want the text)
+  o Return: JSON Object
+              Timestamp of when page was accessed
+              URL that was crawled
+              HTML source of the resource
+              Array of links on the page
