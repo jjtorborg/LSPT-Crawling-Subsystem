@@ -1,0 +1,51 @@
+openapi: 3.0.0
+info:
+  description: API to crawl a given set of URLs
+  version: 1.0.1
+  title: Crawling API
+  contact:
+    email: eerambach@gmail.com
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+paths:
+  /crawl:
+    post:
+      summary: crawls a URL
+      operationId: crawlURL
+      description: |
+        Sends a URL's source and outgoing links to Document Data Store,
+        and returns its outgoing links to the caller
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+              example: ["http://crawledurl1.com/","http://crawledurl2.com/"]
+      
+      responses:
+        '200':
+          description: dictionary of arrays of outgoing links keyed by crawled URL
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: string
+                example:
+                  http://crawledurl1.com/: ["http://outgoinglink1.com/","http://outgoinglink2.com  /"]
+                  http://crawledurl2.com/: ["http://outgoinglink3.com/"]
+        '400':
+          description: bad request
+          
+# Added by API Auto Mocking Plugin
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/ethan-rambacher/RedWhomCrawling/1.0.1
