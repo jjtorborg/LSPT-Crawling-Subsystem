@@ -61,15 +61,23 @@ public class CrawlerController {
    * @param res the JSON response to be pushed to DDS
    */
   private void pushToDDS(Response res){
+    // If a URL is crawled that contains a doc that should not be a search result,
+    // make a DELETE request to DDS which includes the crawled URL
+
+    // If the crawled URL contains a doc that could be a search result,
+    // make a PUT request to DDS containing the URL, full html document, out-links (anchors), time crawled, and recrawl time.
 
   }
 
   /**
    * Function to facilitate pulling info from Document Data Store
    *
-   *
+   * @param a Request that makes a GET request to DDS
+   * @return a Response that is what we receive from DDS
    */
-  private void pullFromDDS(){
-
+  private Request pullFromDDS(Request req){
+    // When we wantz to know what URLs need to be recrawled,
+    // make a GET request querying by recrawl time to find which
+    // documents have recrawl times before the current time.
   }
 }
