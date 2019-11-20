@@ -21,7 +21,7 @@ public class CrawlerController {
   private static void initServer() {
     // Init server loop
 
-    // Listen for API calls
+    // Listen for API calls (handleCrawlRequest if receive call)
 
     // Instantiate a new crawler if receives API call
   }
