@@ -4,6 +4,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import spark.Request;
 import spark.Response;
+import java.util.*;
 
 public class CrawlerController {
   /**
@@ -20,8 +21,8 @@ public class CrawlerController {
   }
 
   /**
-   * Driver function to handle a request to crawl a list of URLs
-   * Request and response bodies are specified in the Swagger specification
+   * Driver function to handle a request to crawl a list of URLs Request and response bodies are
+   * specified in the Swagger specification
    *
    * @param req the JSON request, containing a list of string URLs in the body
    * @param res the JSON response to be returned
@@ -40,19 +41,22 @@ public class CrawlerController {
    * @param url the URL that will be crawled for its HTML
    * @return the raw HTML in a string
    */
-  private String getHTML(String url){
+  private String getHTML(String url) {
     // Call jsoup to get the HTML
     // Return value
+    return "";
   }
+
   /**
    * Function to call jsoup and return a vector of links from the page
    *
    * @param url the URL that will be crawled for its HTML
    * @return a list of links
    */
-  private List<String> getLinks(String url){
+  private List<String> getLinks(String url) {
     // Call jsoup to get the links
     // Return value
+    return null;
   }
 
   /**
@@ -60,24 +64,25 @@ public class CrawlerController {
    *
    * @param res the JSON response to be pushed to DDS
    */
-  private void pushToDDS(Response res){
+  private void pushToDDS(Response res) {
     // If a URL is crawled that contains a doc that should not be a search result,
     // make a DELETE request to DDS which includes the crawled URL
 
     // If the crawled URL contains a doc that could be a search result,
-    // make a PUT request to DDS containing the URL, full html document, out-links (anchors), time crawled, and recrawl time.
-
+    // make a PUT request to DDS containing the URL, full html document, out-links (anchors), time
+    // crawled, and recrawl time.
   }
 
   /**
    * Function to facilitate pulling info from Document Data Store
    *
-   * @param a Request that makes a GET request to DDS
+   * @param req Request that makes a GET request to DDS
    * @return a Response that is what we receive from DDS
    */
-  private Request pullFromDDS(Request req){
+  private Request pullFromDDS(Request req) {
     // When we wantz to know what URLs need to be recrawled,
     // make a GET request querying by recrawl time to find which
     // documents have recrawl times before the current time.
+    return null;
   }
 }
