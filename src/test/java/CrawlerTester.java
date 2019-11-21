@@ -5,7 +5,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import spark.Request;
 import spark.Response;
 
-public final class CrawlerTests{
+public final class CrawlerTester{
 
   /*
    * CRAWL-6 tests
