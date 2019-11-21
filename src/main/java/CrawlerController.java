@@ -9,10 +9,21 @@ public class CrawlerController {
    * @param args command-line arguments; should be empty
    */
   public static void main(String[] args) {
-    // Instantiate a new crawler
-
     // Set up PUT endpoint for crawling URLs
 
+    // Start server loop with initServer()
+  }
+
+  /**
+   * Method initializing the infinite server loop
+   * listening for calls to the predefined API 
+   */
+  private static void initServer() {
+    // Init server loop
+
+    // Listen for API calls (handleCrawlRequest if receive call)
+
+    // Instantiate a new crawler if receives API call
   }
 
   /**
@@ -23,7 +34,7 @@ public class CrawlerController {
    * @param res the JSON response to be returned
    */
   private static void handleCrawlRequest(Request req, Response res) {
-    // Parse/serialize/transform the request body into a
+    // Parse/serialize/transform the request body into a readable string
 
     // Crawl the URL
 

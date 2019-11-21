@@ -11,11 +11,17 @@ import java.util.List;
 public class Crawler {
 
   public Crawler() {}
-
-  /** @param url */
+  
+  /**
+     * Gets content and links present on input url
+     * and sends them to LA and DDS
+     * 
+     * @param url
+     */
   public void crawlUrl(String url) {
+    // Perform HTTP GET on input url
 
-  }
+    // Parse text content and contained urls from input webpage
 
   /**
    * Function to call jsoup and return the raw HTML of the given url
