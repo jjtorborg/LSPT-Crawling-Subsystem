@@ -2,6 +2,7 @@ import spark.Request;
 import spark.Response;
 
 public class CrawlerController {
+
     /**
      * Main process, which causes initialization of the Spark server and configures the PUT API
      * endpoint. Will continue handling crawl request until the process is stopped.
@@ -24,10 +25,24 @@ public class CrawlerController {
      */
     private static void handleCrawlRequest(Request req, Response res) {
         // Parse/serialize/transform the request body into a
+        /**
+         * Main process, which causes initialization of the Spark server and configures the PUT API
+         * endpoint. Will continue handling crawl request until the process is stopped.
+         *
+         * @param args command-line arguments; should be empty
+         */
+    }
 
-        // Crawl the URL
+    /**
+     * Method initializing the infinite server loop
+     * listening for calls to the predefined API
+     */
+    private static void initServer() {
+        // Init server loop
 
-        // Set the response body
+        // Listen for API calls (handleCrawlRequest if receive call)
+
+        // Instantiate a new crawler if receives API call
     }
 
     /**
