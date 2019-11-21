@@ -1,0 +1,26 @@
+{
+	"https://www.google.com/webhp?hl=en&sa=X&ved=0ahUKEwjys72e8_nlAhUOTN8KHSZIBFwQPAgH":	{
+		"statusCode": 200,
+		"links": [
+			"https://www.google.com/imghp?hl=en&tab=wi",
+			"https://maps.google.com/maps?hl=en&tab=wl",
+			"https://play.google.com/?hl=en&tab=w8",
+			"https://www.youtube.com/?gl=US&tab=w1",
+			"https://news.google.com/nwshp?hl=en&tab=wn",
+			"https://mail.google.com/mail/?tab=wm",
+			"https://drive.google.com/?tab=wo",
+			"https://www.google.com/intl/en/about/products?tab=wh",
+			"http://www.google.com/history/optout?hl=en",
+			"https://www.google.com/preferences?hl=en",
+			"https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https://www.google.com/webhp?hl=en",
+			"https://www.google.com/images/branding/googlelogo/1x/googlelogo_white_background_color_272x92dp.png",
+			"https://www.google.com/advanced_search?hl=en&authuser=0",
+			"https://www.google.com/language_tools?hl=en&authuser=0",
+			"https://www.google.com/intl/en/ads/",
+			"https://www.google.com/services/",
+			"https://www.google.com/intl/en/about.html",
+			"https://www.google.com/intl/en/policies/privacy/",
+			"https://www.google.com/intl/en/policies/terms/"
+		]
+	}
+}

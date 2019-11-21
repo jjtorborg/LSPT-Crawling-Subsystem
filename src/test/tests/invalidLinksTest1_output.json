@@ -1,0 +1,11 @@
+{
+	"https://union.rpi.edu/clubs?combine=&field_category_tid=20&sort_by=title":	{
+		"statusCode": 404,
+		"links": []
+	},
+
+	"https://rpi.edu/bukowm2":	{
+		"statusCode": 404,
+		"links": []
+	}
+}

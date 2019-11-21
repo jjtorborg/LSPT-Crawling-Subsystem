@@ -1,0 +1,11 @@
+{
+	"http://rpi.edu/AFS":	{
+		"statusCode": 404,
+		"links": []
+	},
+
+	"http://rpi.edu/campus/":	{
+		"statusCode": 404,
+		"links": []
+	}
+}
