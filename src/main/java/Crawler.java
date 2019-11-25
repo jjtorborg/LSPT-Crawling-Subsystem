@@ -15,10 +15,13 @@ public class Crawler {
     }
 
     /**
-     * @param url
+     * Method receiving the API caller input URL and
+     * constructing the properly formatted JSON to be output
+     * 
+     * @param url the URL that will be crawled for its HTML
      */
     public void crawlUrl(String url) {
-
+        // Call submethods and obtain required resulting data
     }
 
     /**
