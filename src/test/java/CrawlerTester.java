@@ -1,34 +1,105 @@
-import org.junit.Test;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.apache.commons.io.FileUtils;
+import org.json.JSONException;
+import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import spark.Request;
-import spark.Response;
 
-public final class CrawlerTester{
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
+public final class CrawlerTester {
+  private CrawlerController crawlerController;
+  private Crawler crawler;
+
+  /**
+   * Test setup
+   */
+  public void setUp() {
+    this.crawlerController = new CrawlerController();
+    this.crawler = new Crawler();
+  }
+  
   /*
    * CRAWL-6 tests
    * handles links with permission restrictons
    *
    */
 
+  /**
+   * Helper method to parse file paths and return 
+   * their associated file content as string
+   * @param outputFilename
+   * @return file content as string
+   */
+  private String readFileFromPathToString(String outputFilename) {
+    StringBuilder contentBuilder = new StringBuilder();
+    try (Stream<String> stream = Files.lines( Paths.get(outputFilename), StandardCharsets.UTF_8)) 
+    {
+        stream.forEach(s -> contentBuilder.append(s).append("\n"));
+    }
+    catch (IOException e) 
+    {
+        e.printStackTrace();
+    }
+    return contentBuilder.toString();
+  }
+
+  private void assertCrawledUrlResponseEquals(String url, String outputFilename) throws IOException {
+    String outputAsString = FileUtils.readFileToString(FileUtils.getFile(outputFilename));
+
+    Map<String,Object> crawlerResponse = this.crawler.crawlUrl(url);
+    Gson gson = new Gson();
+    gson.toJson(crawlerResponse);
+
+    JSONAssert.assertEquals(outputAsString, actual, JSONCompareMode.LENIENT);
+  }
+
   @Test
   public void testEthics(){
     //links with permission restrictions
-    handleCrawlRequest(Response req, Response res);
-    String expected = FileUtils.readFileToString("/ethicsTest1_output.json");
-    JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    Request req;
+    String res;
+
+    res = this.crawlerController.handleCrawlRequest(req);
+    String input = readFileFromPathToString("/ethicsTest1_input.json");
+    String expected = readFileFromPathToString("/ethicsTest1_output.json");
+    
+    try {
+      JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    } catch (JSONException e) {
+      // println("CRAWLER", "Unexpected JSON exception", e);
+    }
 
     //links with no permission restrictions
-    handleCrawlRequest(Response req, Response res);
-    String expected = FileUtils.readFileToString("/ethicsTest2_output.json");
-    JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    res = this.crawlerController.handleCrawlRequest(req);
+    input = readFileFromPathToString("/ethicsTest2_input.json");
+    expected = readFileFromPathToString("/ethicsTest2_output.json");
+    
+    try {
+      JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    } catch (JSONException e) {
+      // println("CRAWLER", "Unexpected JSON exception", e);
+    }
 
     //links with both no restrictions and permission restrictions
-    handleCrawlRequest(Response req, Response res);
-    String expected = FileUtils.readFileToString("/ethicsTest3_output.json");
-    JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    res = this.crawlerController.handleCrawlRequest(req);
+    input = readFileFromPathToString("/ethicsTest3_input.json");
+    expected = readFileFromPathToString("/ethicsTest3_output.json");
+    
+    try {
+      JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    } catch (JSONException e) {
+      // println("CRAWLER", "Unexpected JSON exception", e);
+    }
   }
 
   /*
@@ -40,20 +111,38 @@ public final class CrawlerTester{
 
   @Test
   public void testRelevance(){
+    Request req;
+    String res;
+
     //rpi related domain
-    handleCrawlRequest(Response req, Response res);
-    String expected1 = FileUtils.readFileToString("/relevanceTest1_output.json");
-    JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    res = this.crawlerController.handleCrawlRequest(req);
+    String expected = readFileFromPathToString("/relevanceTest1_output.json");
+    
+    try {
+      JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    } catch (JSONException e) {
+      // println("CRAWLER", "Unexpected JSON exception", e);
+    }
 
     //non rpi related domain
-    handleCrawlRequest(Response req, Response res);
-    String expected2 = FileUtils.readFileToString("/relevanceTest2_output.json");
-    JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    res = this.crawlerController.handleCrawlRequest(req);
+    expected = readFileFromPathToString("/relevanceTest2_output.json");
+    
+    try {
+      JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    } catch (JSONException e) {
+      // println("CRAWLER", "Unexpected JSON exception", e);
+    }
 
     //both rpi and non rpi related domains
-    handleCrawlRequest(Response req, Response res);
-    String expected3 = FileUtils.readFileToString("/relevanceTest3_output.json");
-    JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    res = this.crawlerController.handleCrawlRequest(req);
+    expected = readFileFromPathToString("/relevanceTest3_output.json");
+    
+    try {
+      JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    } catch (JSONException e) {
+      // println("CRAWLER", "Unexpected JSON exception", e);
+    }
   }
 
   /*
@@ -66,21 +155,38 @@ public final class CrawlerTester{
 
   @Test
   public void testRecrawl() {
+    Request req;
+    String res;
 
     //links needed to be recrawled
-    handleCrawlRequest(Response req, Response res);
-    String expected1 = FileUtils.readFileToString("/recrawlTest1_output.json");
-    JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    res = this.crawlerController.handleCrawlRequest(req);
+    String expected = readFileFromPathToString("/recrawlTest1_output.json");
+    
+    try {
+      JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    } catch (JSONException e) {
+      // println("CRAWLER", "Unexpected JSON exception", e);
+    }
 
     //links that do not need to be recrawled
-    handleCrawlRequest(Response req, Response res);
-    String expected2 = FileUtils.readFileToString("/recrawlTest2_output.json");
-    JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    res = this.crawlerController.handleCrawlRequest(req);
+    expected = readFileFromPathToString("/recrawlTest2_output.json");
+    
+    try {
+      JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    } catch (JSONException e) {
+      // println("CRAWLER", "Unexpected JSON exception", e);
+    }
 
     //links that do not need and need to be recrawled
-    handleCrawlRequest(Response req, Response res);
-    String expected3 = FileUtils.readFileToString("/recrawlTest3_output.json");
-    JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    res = this.crawlerController.handleCrawlRequest(req);
+    expected = readFileFromPathToString("/recrawlTest3_output.json");
+    
+    try {
+      JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    } catch (JSONException e) {
+      // println("CRAWLER", "Unexpected JSON exception", e);
+    }
   }
 
   /*
@@ -90,30 +196,58 @@ public final class CrawlerTester{
 
   @Test
   public void testInvalidLinks (){
+    Request req;
+    String res;
+
     //links that lead to 404 errors
-    handleCrawlRequest(Response req, Response res);
-    String expected1 = FileUtils.readFileToString("/invalidLinksTest1_output.json");
-    JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    res = this.crawlerController.handleCrawlRequest(req);
+    String expected = readFileFromPathToString("/invalidLinksTest1_output.json");
+    
+    try {
+      JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    } catch (JSONException e) {
+      // println("CRAWLER", "Unexpected JSON exception", e);
+    }
 
     //links that lead to deadends
-    handleCrawlRequest(Response req, Response res);
-    String expected2 = FileUtils.readFileToString("/invalidLinksTest2_output.json");
-    JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    res = this.crawlerController.handleCrawlRequest(req);
+    expected = readFileFromPathToString("/invalidLinksTest2_output.json");
+    
+    try {
+      JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    } catch (JSONException e) {
+      // println("CRAWLER", "Unexpected JSON exception", e);
+    }
 
     //links that lead to 404 errors and deadends
-    handleCrawlRequest(Response req, Response res);
-    String expected3 = FileUtils.readFileToString("/invalidLinksTest3_output.json");
-    JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    res = this.crawlerController.handleCrawlRequest(req);
+    expected = readFileFromPathToString("/invalidLinksTest3_output.json");
+    
+    try {
+      JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    } catch (JSONException e) {
+      // println("CRAWLER", "Unexpected JSON exception", e);
+    }
 
     //links that lead to 404 errors, deadends and valid links
-    handleCrawlRequest(Response req, Response res);
-    String expected4 = FileUtils.readFileToString("/invalidTest4_outputLinks.json");
-    JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    res = this.crawlerController.handleCrawlRequest(req);
+    expected = readFileFromPathToString("/invalidTest4_outputLinks.json");
+    
+    try {
+      JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    } catch (JSONException e) {
+      // println("CRAWLER", "Unexpected JSON exception", e);
+    }
 
     //json files with empty strings as links
-    handleCrawlRequest(Response req, Response res);
-    String expected5 = FileUtils.readFileToString("/invalidTestLinks5_output.json");
-    JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    res = this.crawlerController.handleCrawlRequest(req);
+    expected = readFileFromPathToString("/invalidTestLinks5_output.json");
+    
+    try {
+      JSONAssert.assertEquals(expected, res, JSONCompareMode.STRICT);
+    } catch (JSONException e) {
+      // println("CRAWLER", "Unexpected JSON exception", e);
+    }
 
   }
 
