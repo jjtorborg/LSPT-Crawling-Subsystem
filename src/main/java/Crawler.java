@@ -11,38 +11,56 @@ import java.util.List;
 
 public class Crawler {
 
-    public Crawler() {
+    /**
+     * Constructor for a Crawler that sets up a crawler instance with a specific Document Data Store
+     * @param DDSUrl the URL corresponding to an instance of Document Data Store
+     */
+    public Crawler(String DDSUrl) {
     }
 
     /**
-     * Method receiving the API caller input URL and
-     * constructing the properly formatted JSON to be output
+     * Method receiving the API caller input URL and constructing a Map<String, Object> that contains a list of outgoing
+     * links and the HTTP status code for the given URL.  The list will not contain any links using the "mailto" URI
+     * scheme, i.e. any links of the form "mailto:example@example.com". The list may contain "dead" links.
      * 
      * @param url the URL that will be crawled for its HTML
+     * @return a map with two string keys: "statusCode" and "links". "statusCode" contains the integer status code
+     * returned by the GET request on that URL, and "links" contains a List of Strings that are the URLs of the
+     * outgoing links from the URL argument. In JSON this would be similar to:
+     * {
+     *     "statusCode": 200,
+     *     "links": [
+     *          "http://outgoinglink1.com/",
+     *          "http://outgoinglink2.com/",
+     *          "http://possiblydeadlink.com/"
+     *     ]
+     * }
+     *
      */
-    public void crawlUrl(String url) {
+    public Map<String,Object> crawlUrl(String url) {
         // Call submethods and obtain required resulting data
+
     }
 
     /**
      * Function to call jsoup and return the raw HTML of the given url
      *
-     * @param url the URL that will be crawled for its HTML
-     * @return the raw HTML in a string
+     * @param document the jsoup Document to get the full HTML text of
+     * @return the raw HTML of the document in a string
      */
-    private String getHTML(String url) {
+    private String getHTML(Document document) {
         // Call jsoup to get the HTML
         // Return value
         return "";
     }
 
     /**
-     * Function to call jsoup and return a vector of links from the page
+     * Function to call jsoup and return a List of String links from the page
      *
-     * @param url the URL that will be crawled for its HTML
-     * @return a list of links
+     * @param document the jsoup Document to extract links from
+     * @return a List of URLs (as Strings) that are in the HTML content
      */
-    private List<String> getLinks(String url) {
+    private List<String> getLinks(Document document) {
         // Call jsoup to get the links
         // Return value
         return null;
@@ -51,9 +69,11 @@ public class Crawler {
     /**
      * Function to facilitate pushing info to Document Data Store
      *
+     *
      * @param res the JSON response to be pushed to DDS
+     * @return the HTTP status code returned by DDS
      */
-    private void pushToDDS(Response res) {
+    private int pushToDDS(Response res) {
         // If a URL is crawled that contains a doc that should not be a search result,
         // make a DELETE request to DDS which includes the crawled URL
 

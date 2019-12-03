@@ -1,6 +1,8 @@
 import spark.Request;
 import spark.Response;
 
+import static spark.route.HttpMethod.get;
+
 public class CrawlerController {
 
     /**
@@ -9,7 +11,7 @@ public class CrawlerController {
      *
      * @param args command-line arguments; should be empty
      */
-    public static void main(String[] args) {
+    public void main(String[] args) {
         // Instantiate a new crawler
 
         // Set up PUT endpoint for crawling URLs
@@ -21,21 +23,16 @@ public class CrawlerController {
      * specified in the Swagger specification
      *
      * @param req the JSON request, containing a list of string URLs in the body
-     * @param res the JSON response to be returned
+     * @return a string serialization of the JSON response
      */
-    private static void handleCrawlRequest(Request req, Response res) {
-        // Parse/serialize/transform the request body into a
-        /**
-         * Main process, which causes initialization of the Spark server and configures the PUT API
-         * endpoint. Will continue handling crawl request until the process is stopped.
-         *
-         * @param args command-line arguments; should be empty
-         */
+    private static String handleCrawlRequest(Request req) {
+
     }
 
     /**
-     * Method initializing the infinite server loop
+     * Method initializing the Spark server and endpoint
      * listening for calls to the predefined API
+     * Sets up logic with handleCrawlRequest and request/response JSON structure
      */
     private static void initServer() {
         // Init server loop
