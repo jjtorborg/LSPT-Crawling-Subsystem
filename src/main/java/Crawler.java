@@ -5,6 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
 import java.util.*;
 
 import java.util.List;
@@ -33,7 +34,13 @@ public class Crawler {
     private String getHTML(String url) {
         // Call jsoup to get the HTML
         // Return value
-        return "";
+        String html = "";
+        try {
+            html = Jsoup.connect(url).get().html();
+        }
+        catch (Exception e){System.out.println("Unable to fetch HTML from URL");
+        }
+        return html;
     }
 
     /**
@@ -45,7 +52,18 @@ public class Crawler {
     private List<String> getLinks(String url) {
         // Call jsoup to get the links
         // Return value
-        return null;
+        List<String> linksList = null;
+        try {
+            Document doc = Jsoup.connect(url).get();
+            Elements links = doc.select("a");
+            for (Element link : links){
+                linksList.add(link.attr("abs:href"));
+            }
+        }
+        catch (Exception e){
+            System.out.println("Unable to fetch links from URL");
+        }
+        return linksList;
     }
 
     /**
