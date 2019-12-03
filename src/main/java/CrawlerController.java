@@ -25,8 +25,8 @@ public class CrawlerController {
      * @param req the JSON request, containing a list of string URLs in the body
      * @return a string serialization of the JSON response
      */
-    private static String handleCrawlRequest(Request req) {
-
+    public String handleCrawlRequest(Request req) {
+        return "";
     }
 
     /**
@@ -34,7 +34,7 @@ public class CrawlerController {
      * listening for calls to the predefined API
      * Sets up logic with handleCrawlRequest and request/response JSON structure
      */
-    private static void initServer() {
+    private void initServer() {
         // Init server loop
 
         // Listen for API calls (handleCrawlRequest if receive call)
