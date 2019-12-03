@@ -5,12 +5,17 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpDelete;
+
 import java.io.IOException;
 import java.util.*;
 
 import java.util.List;
 
 public class Crawler {
+
+    private String putURL = "lspt-TODO.cs.rpi.edu";
 
     public Crawler() {
     }
@@ -78,5 +83,7 @@ public class Crawler {
         // If the crawled URL contains a doc that could be a search result,
         // make a PUT request to DDS containing the URL, full html document, out-links (anchors), time
         // crawled, and recrawl time.
+        HttpPut request = new HttpPut(this.putURL);
+
     }
 }
