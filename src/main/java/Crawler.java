@@ -1,13 +1,8 @@
-import spark.Request;
-import spark.Response;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.util.*;
+import spark.Response;
 
 import java.util.List;
+import java.util.Map;
 
 public class Crawler {
 
@@ -39,6 +34,7 @@ public class Crawler {
      */
     public Map<String,Object> crawlUrl(String url) {
         // Call submethods and obtain required resulting data
+        return null;
 
     }
 

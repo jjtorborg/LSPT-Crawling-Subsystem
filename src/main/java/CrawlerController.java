@@ -3,6 +3,9 @@ import spark.Request;
 import spark.Spark.*;
 import spark.Response;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 import static spark.Spark.post;
 import static spark.Spark.port;
 import static spark.Spark.threadPool;
@@ -47,11 +50,13 @@ public class CrawlerController {
         Gson gson = new Gson();
         String[] urls = gson.fromJson(req.body(),String[].class);
 
+        Map<String, Map<String,Object>> linkMap = new TreeMap<>();
         for (String url : urls) {
-            c.crawlUrl(url);
+            Map<String, Object> singlePage = c.crawlUrl(url);
+            linkMap.put(url,singlePage);
         }
 
-
+        return gson.toJson(linkMap);
     }
 
     /**
@@ -59,7 +64,7 @@ public class CrawlerController {
      * listening for calls to the predefined API
      * Sets up logic with handleCrawlRequest and request/response JSON structure
      */
-    private static void initServer() {
+    private void initServer() {
         // Init server loop
 
         // Listen for API calls (handleCrawlRequest if receive call)
