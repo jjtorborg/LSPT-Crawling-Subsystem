@@ -1,3 +1,4 @@
+import org.eclipse.jetty.http.HttpStatus;
 import org.jsoup.nodes.Document;
 import spark.Response;
 
@@ -76,5 +77,7 @@ public class Crawler {
         // If the crawled URL contains a doc that could be a search result,
         // make a PUT request to DDS containing the URL, full html document, out-links (anchors), time
         // crawled, and recrawl time.
+
+        return 404;
     }
 }
