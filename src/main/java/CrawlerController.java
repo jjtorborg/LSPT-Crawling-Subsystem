@@ -1,21 +1,37 @@
+import com.google.gson.Gson;
 import spark.Request;
+import spark.Spark.*;
 import spark.Response;
 
-import static spark.route.HttpMethod.get;
+import static spark.Spark.post;
+import static spark.Spark.port;
+import static spark.Spark.threadPool;
 
 public class CrawlerController {
+    public static String DDSUrl;
 
     /**
      * Main process, which causes initialization of the Spark server and configures the PUT API
      * endpoint. Will continue handling crawl request until the process is stopped.
      *
-     * @param args command-line arguments; should be empty
+     * @param args command-line arguments. First argument should be the URL for DDS
      */
-    public void main(String[] args) {
-        // Instantiate a new crawler
+    public static void main(String[] args) {
+        if (args.length < 1) {
+            throw new IllegalArgumentException("First command-line argument should be the URL to DDS");
+        }
+
+        DDSUrl = args[0];
+
+        // Set up Spark server configuration
+        port(4567); // explicitly set default Spark port
+        int maxThreads = 8;
+        threadPool(maxThreads); // allow maximum of 8 threads to handle requests
 
         // Set up PUT endpoint for crawling URLs
-
+        post("/crawl",
+                (request, response) -> handleCrawlRequest(request),
+                JsonUtil.json());
     }
 
     /**
@@ -26,6 +42,15 @@ public class CrawlerController {
      * @return a string serialization of the JSON response
      */
     private static String handleCrawlRequest(Request req) {
+
+        Crawler c = new Crawler(DDSUrl);
+        Gson gson = new Gson();
+        String[] urls = gson.fromJson(req.body(),String[].class);
+
+        for (String url : urls) {
+            c.crawlUrl(url);
+        }
+
 
     }
 
