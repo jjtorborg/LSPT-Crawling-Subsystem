@@ -5,12 +5,17 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpDelete;
+
+import java.io.IOException;
 import java.util.*;
 
 import java.util.List;
 
 public class Crawler {
 
+    private final String putURL = "lspt-TODO.cs.rpi.edu";
     /**
      * Constructor for a Crawler that sets up a crawler instance with a specific Document Data Store
      * @param DDSUrl the URL corresponding to an instance of Document Data Store
@@ -39,7 +44,7 @@ public class Crawler {
      */
     public Map<String,Object> crawlUrl(String url) {
         // Call submethods and obtain required resulting data
-
+        return null;
     }
 
     /**
@@ -51,7 +56,13 @@ public class Crawler {
     private String getHTML(Document document) {
         // Call jsoup to get the HTML
         // Return value
-        return "";
+        String html = "";
+        try {
+            html = document.html();
+        }
+        catch (Exception e){System.out.println("Unable to fetch HTML from URL");
+        }
+        return html;
     }
 
     /**
@@ -63,7 +74,17 @@ public class Crawler {
     private List<String> getLinks(Document document) {
         // Call jsoup to get the links
         // Return value
-        return null;
+        List<String> linksList = null;
+        try {
+            Elements links = document.select("a");
+            for (Element link : links){
+                linksList.add(link.attr("abs:href"));
+            }
+        }
+        catch (Exception e){
+            System.out.println("Unable to fetch links from URL");
+        }
+        return linksList;
     }
 
     /**
@@ -80,5 +101,7 @@ public class Crawler {
         // If the crawled URL contains a doc that could be a search result,
         // make a PUT request to DDS containing the URL, full html document, out-links (anchors), time
         // crawled, and recrawl time.
+        HttpPut request = new HttpPut(this.putURL);
+        return 0;
     }
 }
