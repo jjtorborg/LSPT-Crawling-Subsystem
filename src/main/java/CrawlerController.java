@@ -2,6 +2,7 @@ import com.google.gson.Gson;
 import spark.Request;
 import spark.Spark.*;
 import spark.Response;
+import org.apache.http.client.methods.HttpGet;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -12,6 +13,9 @@ import static spark.Spark.threadPool;
 
 public class CrawlerController {
     public static String DDSUrl;
+
+
+    private String recrawlURL = "lspt-TODO.cs.rpi.edu";
 
     /**
      * Main process, which causes initialization of the Spark server and configures the PUT API
@@ -78,10 +82,13 @@ public class CrawlerController {
      * @param req Request that makes a GET request to DDS
      * @return a Response that is what we receive from DDS
      */
-    private Request pullFromDDS(Request req) {
-        // When we wantz to know what URLs need to be recrawled,
+    private Response pullFromDDS(Request req) {
+        // When we want to know what URLs need to be recrawled,
         // make a GET request querying by recrawl time to find which
         // documents have recrawl times before the current time.
+        Response res;
+        HttpGet request = new HttpGet(this.recrawlURL);
+
         return null;
     }
 }
