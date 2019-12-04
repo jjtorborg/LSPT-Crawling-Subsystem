@@ -30,15 +30,7 @@ public class CrawlerController {
 
         DDSUrl = args[0];
 
-        // Set up Spark server configuration
-        port(4567); // explicitly set default Spark port
-        int maxThreads = 8;
-        threadPool(maxThreads); // allow maximum of 8 threads to handle requests
-
-        // Set up PUT endpoint for crawling URLs
-        post("/crawl",
-                (request, response) -> handleCrawlRequest(request),
-                JsonUtil.json());
+        initServer();
     }
 
     /**
@@ -68,12 +60,16 @@ public class CrawlerController {
      * listening for calls to the predefined API
      * Sets up logic with handleCrawlRequest and request/response JSON structure
      */
-    private void initServer() {
-        // Init server loop
+    private static void initServer() {
+        // Set up Spark server configuration
+        port(4567); // explicitly set default Spark port
+        int maxThreads = 8;
+        threadPool(maxThreads); // allow maximum of 8 threads to handle requests
 
-        // Listen for API calls (handleCrawlRequest if receive call)
-
-        // Instantiate a new crawler if receives API call
+        // Set up PUT endpoint for crawling URLs
+        post("/crawl",
+                (request, response) -> handleCrawlRequest(request),
+                JsonUtil.json());
     }
 
     /**
