@@ -44,7 +44,7 @@ public class Crawler {
      */
     public Map<String,Object> crawlUrl(String url) {
         // Call submethods and obtain required resulting data
-
+        return null;
     }
 
     /**
@@ -58,7 +58,7 @@ public class Crawler {
         // Return value
         String html = "";
         try {
-            html = Jsoup.connect(url).get().html();
+            html = document.html();
         }
         catch (Exception e){System.out.println("Unable to fetch HTML from URL");
         }
@@ -76,8 +76,7 @@ public class Crawler {
         // Return value
         List<String> linksList = null;
         try {
-            Document doc = Jsoup.connect(url).get();
-            Elements links = doc.select("a");
+            Elements links = document.select("a");
             for (Element link : links){
                 linksList.add(link.attr("abs:href"));
             }
@@ -103,6 +102,6 @@ public class Crawler {
         // make a PUT request to DDS containing the URL, full html document, out-links (anchors), time
         // crawled, and recrawl time.
         HttpPut request = new HttpPut(this.putURL);
-
+        return 0;
     }
 }
