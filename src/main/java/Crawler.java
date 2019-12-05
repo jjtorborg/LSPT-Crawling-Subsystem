@@ -1,12 +1,20 @@
 import org.apache.http.client.methods.HttpPut;
+import org.jsoup.HttpStatusException;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import spark.Response;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.*;
 import java.util.List;
 import java.util.Map;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 public class Crawler {
 
@@ -38,8 +46,70 @@ public class Crawler {
      *
      */
     public Map<String,Object> crawlUrl(String url) {
-        // Call submethods and obtain required resulting data
-        return null;
+
+        // Status is good until error occurs
+        String statusCode = "200";
+
+        // Generate jsoup document from input url
+        Document doc = new Document(url);
+        
+        try {
+            doc = Jsoup.connect(url).get();
+        }
+        catch (MalformedURLException e) {
+            System.out.println("ERROR: MalformedURLException on " + url);
+        }
+        catch (HttpStatusException e) {
+            statusCode = Integer.toString(e.getStatusCode());
+            System.out.println("ERROR: HttpStatusException \"" + statusCode + "\" on" + url);
+        }
+        catch (IOException e) {
+            System.out.println("ERROR: Connection failed on " + url);
+        }
+        
+        // Take a timestamp and make recrawl time 1 week in future
+        Date timestamp = new Date();
+        Date recrawlTime = new Date(
+            // 1000 ms * 60 s * 60 min * 24 hr * 7 days
+            System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7
+        );
+
+        // Get contained links
+        List<String> links = getLinks(doc);
+
+        // Initialize resulting intermediate map structure
+        Map<String, Object> result = new HashMap<String, Object>();
+
+        // Add status code and links to map
+        result.put("statusCode", statusCode);
+        result.put("links", links);
+
+        // Get HTML content
+        String body = getHTML(doc);
+
+        // Package all DDS required data
+        Map<String, Object> outputJsonAsMap = new HashMap<String, Object>();
+        List<Map<String, Object>> documents = new ArrayList<Map<String, Object>>();
+        Map<String, Object> documentJson = new HashMap<String, Object>();
+        List<Map<String, Object>> anchors = new ArrayList<Map<String, Object>>();
+
+        documentJson.put("url", url);
+        documentJson.put("body", body);
+        documentJson.put("crawledDateTime", timestamp);
+        documentJson.put("recrawlDateTime", recrawlTime);
+        documentJson.put("anchors", anchors);
+
+        documents.add(documentJson);
+        outputJsonAsMap.put("documents", documents);
+
+        // Push to DDS
+        Gson gsonBuilder = new GsonBuilder().create();
+        String outputJson = gsonBuilder.toJson(outputJsonAsMap);
+
+        Response res;
+        pushToDDS(res);
+
+        return result;
     }
 
     /**
@@ -55,7 +125,8 @@ public class Crawler {
         try {
             html = document.html();
         }
-        catch (Exception e){System.out.println("Unable to fetch HTML from URL");
+        catch (Exception e) {
+            System.out.println("Unable to fetch HTML from URL");
         }
         return html;
     }
