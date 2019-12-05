@@ -1,18 +1,18 @@
 import com.google.gson.Gson;
-import spark.Request;
-import spark.Spark.*;
-import spark.Response;
 import org.apache.http.client.methods.HttpGet;
+import spark.Request;
+import spark.Response;
 
 import java.util.Map;
 import java.util.TreeMap;
 
-import static spark.Spark.post;
-import static spark.Spark.port;
-import static spark.Spark.threadPool;
+import static spark.Spark.*;
 
 public class CrawlerController {
-    public static String DDSUrl;
+    public static String DDSPutUrl;
+    private static String DDSRecrawlURL;
+    private static final int maxThreads = 8;
+    private static final int port = 4567;
 
 
     private String recrawlURL = "lspt-TODO.cs.rpi.edu";
@@ -28,7 +28,8 @@ public class CrawlerController {
             throw new IllegalArgumentException("First command-line argument should be the URL to DDS");
         }
 
-        DDSUrl = args[0];
+        DDSPutUrl = args[0];
+        DDSRecrawlURL = args[1];
 
         initServer();
     }
@@ -42,7 +43,7 @@ public class CrawlerController {
      */
     private static String handleCrawlRequest(Request req) {
 
-        Crawler c = new Crawler(DDSUrl);
+        Crawler c = new Crawler(DDSPutUrl);
         Gson gson = new Gson();
         String[] urls = gson.fromJson(req.body(),String[].class);
 
@@ -62,8 +63,7 @@ public class CrawlerController {
      */
     private static void initServer() {
         // Set up Spark server configuration
-        port(4567); // explicitly set default Spark port
-        int maxThreads = 8;
+        port(port); // explicitly set default Spark port
         threadPool(maxThreads); // allow maximum of 8 threads to handle requests
 
         // Set up PUT endpoint for crawling URLs
@@ -78,12 +78,12 @@ public class CrawlerController {
      * @param req Request that makes a GET request to DDS
      * @return a Response that is what we receive from DDS
      */
-    private Response pullFromDDS(Request req) {
+    private static Response pullFromDDS(Request req) {
         // When we want to know what URLs need to be recrawled,
         // make a GET request querying by recrawl time to find which
         // documents have recrawl times before the current time.
         Response res;
-        HttpGet request = new HttpGet(this.recrawlURL);
+        HttpGet request = new HttpGet(DDSRecrawlURL);
 
         return null;
     }
