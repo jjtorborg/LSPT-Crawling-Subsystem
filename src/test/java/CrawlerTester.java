@@ -65,21 +65,21 @@ public final class CrawlerTester {
   public void testEthics() throws IOException {
     //links with permission restrictions
 
-    String input = readFileFromPathToString("ethics_tests/ethicsTest1-1_input.json");
-    String expected = readFileFromPathToString("ethics_tests/ethicsTest1-1_output.json");
+    String input = readFileFromPathToString("/ethics_tests/ethicsTest1-1_input.json");
+    String expected = readFileFromPathToString("/ethics_tests/ethicsTest1-1_output.json");
     assertCrawledUrlResponseEquals(input, expected);
 
-    input = readFileFromPathToString("ethics_tests/ethicsTest1-2_input.json");
-    expected = readFileFromPathToString("ethics_tests/ethicsTest1-2_output.json");
+    input = readFileFromPathToString("/ethics_tests/ethicsTest1-2_input.json");
+    expected = readFileFromPathToString("/ethics_tests/ethicsTest1-2_output.json");
     assertCrawledUrlResponseEquals(input, expected);
 
     //links with no permission restrictions
-    input = readFileFromPathToString("ethics_tests/ethicsTest2-1_input.json");
-    expected = readFileFromPathToString("ethics_tests/ethicsTest2-1_output.json");
+    input = readFileFromPathToString("/ethics_tests/ethicsTest2-1_input.json");
+    expected = readFileFromPathToString("/ethics_tests/ethicsTest2-1_output.json");
     assertCrawledUrlResponseEquals(input, expected);
 
-    input = readFileFromPathToString("ethics_tests/ethicsTest2-2_input.json");
-    expected = readFileFromPathToString("ethics_tests/ethicsTest2-2_output.json");
+    input = readFileFromPathToString("/ethics_tests/ethicsTest2-2_input.json");
+    expected = readFileFromPathToString("/ethics`_tests/ethicsTest2-2_output.json");
     assertCrawledUrlResponseEquals(input, expected);
 
   }
