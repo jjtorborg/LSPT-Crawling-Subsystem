@@ -70,7 +70,7 @@ public class Crawler {
         // Take a timestamp and make recrawl time 1 week in future
         Date timestamp = new Date();
         Date recrawlTime = new Date(
-            // 1000 ms * 60 s * 60 min * 24 hr * 7 days
+            // 1000 ms * 60 s * 60 min * 24 hr * 7 days = 1 week
             System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7
         );
 
@@ -107,6 +107,9 @@ public class Crawler {
         String outputJson = gsonBuilder.toJson(outputJsonAsMap);
 
         Response res;
+        res.type("application/json");
+        res.body(outputJson);1
+        
         pushToDDS(res);
 
         return result;
