@@ -65,21 +65,21 @@ public final class CrawlerTester {
   public void testEthics() throws IOException {
     //links with permission restrictions
 
-    String input = readFileFromPathToString("ethics_tests/ethicsTest1-1_input.json");
-    String expected = readFileFromPathToString("ethics_tests/ethicsTest1-1_output.json");
+    String input = readFileFromPathToString("/tests/ethics_tests/ethicsTest1-1_input.json");
+    String expected = readFileFromPathToString("/tests/ethics_tests/ethicsTest1-1_output.json");
     assertCrawledUrlResponseEquals(input, expected);
 
-    input = readFileFromPathToString("ethics_tests/ethicsTest1-2_input.json");
-    expected = readFileFromPathToString("ethics_tests/ethicsTest1-2_output.json");
+    input = readFileFromPathToString("/tests/ethics_tests/ethicsTest1-2_input.json");
+    expected = readFileFromPathToString("/tests/ethics_tests/ethicsTest1-2_output.json");
     assertCrawledUrlResponseEquals(input, expected);
 
     //links with no permission restrictions
-    input = readFileFromPathToString("ethics_tests/ethicsTest2-1_input.json");
-    expected = readFileFromPathToString("ethics_tests/ethicsTest2-1_output.json");
+    input = readFileFromPathToString("/tests/ethics_tests/ethicsTest2-1_input.json");
+    expected = readFileFromPathToString("/tests/ethics_tests/ethicsTest2-1_output.json");
     assertCrawledUrlResponseEquals(input, expected);
 
-    input = readFileFromPathToString("ethics_tests/ethicsTest2-2_input.json");
-    expected = readFileFromPathToString("ethics_tests/ethicsTest2-2_output.json");
+    input = readFileFromPathToString("/tests/ethics_tests/ethicsTest2-2_input.json");
+    expected = readFileFromPathToString("/tests/ethics_tests/ethicsTest2-2_output.json");
     assertCrawledUrlResponseEquals(input, expected);
 
   }
@@ -95,17 +95,17 @@ public final class CrawlerTester {
   public void testRelevance() throws IOException {
 
     //rpi related domain
-    String input = readFileFromPathToString("relevance_tests/relevanceTest1-1_input.json");
-    String expected = readFileFromPathToString("relevance_tests/relevanceTest1-1_output.json");
+    String input = readFileFromPathToString("/tests/relevance_tests/relevanceTest1-1_input.json");
+    String expected = readFileFromPathToString("/tests/relevance_tests/relevanceTest1-1_output.json");
     assertCrawledUrlResponseEquals(input, expected);
 
-    input = readFileFromPathToString("relevance_tests/relevanceTest1-2_input.json");
-    expected = readFileFromPathToString("relevance_tests/relevanceTest1-2_output.json");
+    input = readFileFromPathToString("/tests/relevance_tests/relevanceTest1-2_input.json");
+    expected = readFileFromPathToString("/tests/relevance_tests/relevanceTest1-2_output.json");
     assertCrawledUrlResponseEquals(input, expected);
 
     //non rpi related domain
-    input = readFileFromPathToString("relevance_tests/relevanceTest2-1_input.json");
-    expected = readFileFromPathToString("relevance_tests/relevanceTest2-1_output.json");
+    input = readFileFromPathToString("/tests/relevance_tests/relevanceTest2-1_input.json");
+    expected = readFileFromPathToString("/tests/relevance_tests/relevanceTest2-1_output.json");
     assertCrawledUrlResponseEquals(input, expected);
 
   }
@@ -119,17 +119,17 @@ public final class CrawlerTester {
   public void testInvalidLinks () throws IOException {
 
     //links that lead to 404 errors
-    String input = readFileFromPathToString("validity_tests/invalidLinksTest1-1_input.json");
-    String expected = readFileFromPathToString("validity_tests/invalidLinksTest1-1_output.json");
+    String input = readFileFromPathToString("/tests/validity_tests/invalidLinksTest1-1_input.json");
+    String expected = readFileFromPathToString("/tests/validity_tests/invalidLinksTest1-1_output.json");
     assertCrawledUrlResponseEquals(input, expected);
 
-    input = readFileFromPathToString("validity_tests/invalidLinksTest1-2_input.json");
-    expected = readFileFromPathToString("validity_tests/invalidLinksTest1-2_output.json");
+    input = readFileFromPathToString("/tests/validity_tests/invalidLinksTest1-2_input.json");
+    expected = readFileFromPathToString("/tests/validity_tests/invalidLinksTest1-2_output.json");
     assertCrawledUrlResponseEquals(input, expected);
 
     //json files with empty string as url
-    input = readFileFromPathToString("validity_tests/invalidLinksTest2-1_input.json");
-    expected = readFileFromPathToString("validity_tests/invalidTestLinks2-1_output.json");
+    input = readFileFromPathToString("/tests/validity_tests/invalidLinksTest2-1_input.json");
+    expected = readFileFromPathToString("/tests/validity_tests/invalidTestLinks2-1_output.json");
     assertCrawledUrlResponseEquals(input, expected);
 
   }
