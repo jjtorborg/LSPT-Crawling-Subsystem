@@ -9,82 +9,78 @@ import java.util.TreeMap;
 import static spark.Spark.*;
 
 public class CrawlerController {
-    public static String DDSPutUrl;
-    private static String DDSRecrawlURL;
-    private static final int maxThreads = 8;
-    private static final int port = 4567;
+  public static String DDSPutUrl;
+  private static String DDSRecrawlURL;
+  private static final int maxThreads = 8;
+  private static final int port = 4567;
 
+  private String recrawlURL = "lspt-TODO.cs.rpi.edu";
 
-    private String recrawlURL = "lspt-TODO.cs.rpi.edu";
-
-    /**
-     * Main process, which causes initialization of the Spark server and configures the PUT API
-     * endpoint. Will continue handling crawl request until the process is stopped.
-     *
-     * @param args command-line arguments. First argument should be the URL for DDS
-     */
-    public static void main(String[] args) {
-        if (args.length < 1) {
-            throw new IllegalArgumentException("First command-line argument should be the URL to DDS");
-        }
-
-        DDSPutUrl = args[0];
-        DDSRecrawlURL = args[1];
-
-        initServer();
+  /**
+   * Main process, which causes initialization of the Spark server and configures the PUT API
+   * endpoint. Will continue handling crawl request until the process is stopped.
+   *
+   * @param args command-line arguments. First argument should be the URL for DDS
+   */
+  public static void main(String[] args) {
+    if (args.length < 1) {
+      throw new IllegalArgumentException("First command-line argument should be the URL to DDS");
     }
 
-    /**
-     * Driver function to handle a request to crawl a list of URLs Request and response bodies are
-     * specified in the Swagger specification
-     *
-     * @param req the JSON request, containing a list of string URLs in the body
-     * @return a string serialization of the JSON response
-     */
-    private static String handleCrawlRequest(Request req) {
+    DDSPutUrl = args[0];
+    DDSRecrawlURL = args[1];
 
-        Crawler c = new Crawler(DDSPutUrl);
-        Gson gson = new Gson();
-        String[] urls = gson.fromJson(req.body(),String[].class);
+    initServer();
+  }
 
-        Map<String, Map<String,Object>> linkMap = new TreeMap<>();
-        for (String url : urls) {
-            Map<String, Object> singlePage = c.crawlUrl(url);
-            linkMap.put(url,singlePage);
-        }
+  /**
+   * Driver function to handle a request to crawl a list of URLs Request and response bodies are
+   * specified in the Swagger specification
+   *
+   * @param req the JSON request, containing a list of string URLs in the body
+   * @return a string serialization of the JSON response
+   */
+  private static Map<String, Map<String, Object>> handleCrawlRequest(Request req) {
 
-        return gson.toJson(linkMap);
+    Crawler c = new Crawler(DDSPutUrl);
+    Gson gson = new Gson();
+    String[] urls = gson.fromJson(req.body(), String[].class);
+
+    Map<String, Map<String, Object>> linkMap = new TreeMap<>();
+    for (String url : urls) {
+      Map<String, Object> singlePage = c.crawlUrl(url);
+      linkMap.put(url, singlePage);
     }
 
-    /**
-     * Method initializing the Spark server and endpoint
-     * listening for calls to the predefined API
-     * Sets up logic with handleCrawlRequest and request/response JSON structure
-     */
-    private static void initServer() {
-        // Set up Spark server configuration
-        port(port); // explicitly set default Spark port
-        threadPool(maxThreads); // allow maximum of 8 threads to handle requests
+    return linkMap;
+  }
 
-        // Set up PUT endpoint for crawling URLs
-        post("/crawl",
-                (request, response) -> handleCrawlRequest(request),
-                JsonUtil.json());
-    }
+  /**
+   * Method initializing the Spark server and endpoint listening for calls to the predefined API
+   * Sets up logic with handleCrawlRequest and request/response JSON structure
+   */
+  private static void initServer() {
+    // Set up Spark server configuration
+    port(port); // explicitly set default Spark port
+    threadPool(maxThreads); // allow maximum of 8 threads to handle requests
 
-    /**
-     * Function to facilitate pulling info from Document Data Store
-     *
-     * @param req Request that makes a GET request to DDS
-     * @return a Response that is what we receive from DDS
-     */
-    private static Response pullFromDDS(Request req) {
-        // When we want to know what URLs need to be recrawled,
-        // make a GET request querying by recrawl time to find which
-        // documents have recrawl times before the current time.
-        Response res;
-        HttpGet request = new HttpGet(DDSRecrawlURL);
+    // Set up PUT endpoint for crawling URLs
+    post("/crawl", (request, response) -> handleCrawlRequest(request), JsonUtil.json());
+  }
 
-        return null;
-    }
+  /**
+   * Function to facilitate pulling info from Document Data Store
+   *
+   * @param req Request that makes a GET request to DDS
+   * @return a Response that is what we receive from DDS
+   */
+  private static Response pullFromDDS(Request req) {
+    // When we want to know what URLs need to be recrawled,
+    // make a GET request querying by recrawl time to find which
+    // documents have recrawl times before the current time.
+    Response res;
+    HttpGet request = new HttpGet(DDSRecrawlURL);
+
+    return null;
+  }
 }
