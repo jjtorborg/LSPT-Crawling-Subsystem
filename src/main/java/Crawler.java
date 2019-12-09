@@ -95,7 +95,11 @@ public class Crawler {
     Gson gsonBuilder = new GsonBuilder().create();
     String outputJson = gsonBuilder.toJson(outputJsonAsMap);
 
-    pushToDDS(outputJson);
+    int ddsStatusCode = pushToDDS(outputJson);
+    if (ddsStatusCode < 200 || ddsStatusCode >= 300) {
+      System.out.println(
+          "Could not push to Document Data Store; status code " + Integer.toString(ddsStatusCode));
+    }
 
     return result;
   }
@@ -127,7 +131,7 @@ public class Crawler {
   private List<String> getLinks(Document document) {
     // Call jsoup to get the links
     // Return value
-    List<String> linksList = null;
+    List<String> linksList = new ArrayList<>();
     try {
       Elements links = document.select("a");
       for (Element link : links) {
@@ -142,8 +146,8 @@ public class Crawler {
   /**
    * Function to facilitate pushing info to Document Data Store
    *
-   * @param res the JSON response to be pushed to DDS
-   * @return the HTTP status code returned by DDS
+   * @param res the JSON response to be pushed to DDS, as a string
+   * @return the HTTP status code returned by DDS, or -1 if an unknown exception occurs
    */
   private int pushToDDS(String res) {
     // If a URL is crawled that contains a doc that should not be a search result,
@@ -159,13 +163,11 @@ public class Crawler {
     request.setEntity(entity);
     try {
       final HttpResponse execute = HttpClientBuilder.create().build().execute(request);
-      int statusCode = execute.getStatusLine().getStatusCode();
-      assert statusCode >= 200 && statusCode < 300;
+      return execute.getStatusLine().getStatusCode();
     } catch (Exception e) {
       System.out.println("Could not push to Document Data Store at URL " + this.putURL);
       e.printStackTrace();
+      return -1;
     }
-
-    return 0;
   }
 }
