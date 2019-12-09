@@ -16,13 +16,15 @@ import java.util.*;
 
 public class Crawler {
 
-  private final String putURL = "lspt-TODO.cs.rpi.edu";
+  private final String putURL;
   /**
    * Constructor for a Crawler that sets up a crawler instance with a specific Document Data Store
    *
    * @param DDSUrl the URL corresponding to an instance of Document Data Store
    */
-  public Crawler(String DDSUrl) {}
+  public Crawler(String DDSUrl) {
+    this.putURL = DDSUrl;
+  }
 
   /**
    * Method receiving the API caller input URL and constructing a Map<String, Object> that contains

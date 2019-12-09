@@ -12,7 +12,7 @@ public class CrawlerController {
   public static String DDSPutUrl;
   private static String DDSRecrawlURL;
   private static final int maxThreads = 8;
-  private static final int port = 4567;
+  private static int port;
 
   private String recrawlURL = "lspt-TODO.cs.rpi.edu";
 
@@ -23,12 +23,13 @@ public class CrawlerController {
    * @param args command-line arguments. First argument should be the URL for DDS
    */
   public static void main(String[] args) {
-    if (args.length < 1) {
-      throw new IllegalArgumentException("First command-line argument should be the URL to DDS");
+    if (args.length < 3) {
+      throw new IllegalArgumentException("Usage: java -jar [file] port DDSPutUrl DDSRecrawlUrl");
     }
 
-    DDSPutUrl = args[0];
-    DDSRecrawlURL = args[1];
+    port = Integer.valueOf(args[0]);
+    DDSPutUrl = args[1];
+    DDSRecrawlURL = args[2];
 
     initServer();
   }
