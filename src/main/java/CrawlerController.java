@@ -65,7 +65,7 @@ public class CrawlerController {
     threadPool(maxThreads); // allow maximum of 8 threads to handle requests
 
     // Set up PUT endpoint for crawling URLs
-    post("/crawl", (request, response) -> handleCrawlRequest(request), JsonUtil.json());
+    post("/crawl", (request, response) -> new Gson().toJson(handleCrawlRequest(request)));
   }
 
   /**
