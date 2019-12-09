@@ -9,10 +9,10 @@ import java.util.TreeMap;
 import static spark.Spark.*;
 
 public class CrawlerController {
-  public static String DDSPutUrl;
-  private static String DDSRecrawlURL;
-  private static final int maxThreads = 8;
-  private static final int port = 4567;
+    public static String DDSPutUrl;
+    private static String DDSRecrawlURL;
+    private static final int maxThreads = 8;
+    private static final int port = 80;
 
   private String recrawlURL = "lspt-TODO.cs.rpi.edu";
 
