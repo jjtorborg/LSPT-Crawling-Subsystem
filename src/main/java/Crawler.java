@@ -42,7 +42,7 @@ public class Crawler {
   public Map<String, Object> crawlUrl(String url) {
 
     // Status is good until error occurs
-    String statusCode = "200";
+    int statusCode = 200;
 
     // Generate jsoup document from input url
     Document doc = new Document(url);
@@ -51,11 +51,13 @@ public class Crawler {
       doc = Jsoup.connect(url).get();
     } catch (MalformedURLException e) {
       System.out.println("ERROR: MalformedURLException on " + url);
+      statusCode = 404;
     } catch (HttpStatusException e) {
-      statusCode = Integer.toString(e.getStatusCode());
-      System.out.println("ERROR: HttpStatusException \"" + statusCode + "\" on" + url);
-    } catch (IOException e) {
+      statusCode = e.getStatusCode();
+      System.out.println("ERROR: HttpStatusException \"" + statusCode + "\" on " + url);
+    } catch (Exception e) {
       System.out.println("ERROR: Connection failed on " + url);
+      statusCode = 404;
     }
 
     // Take a timestamp and make recrawl time 1 week in future
@@ -72,7 +74,7 @@ public class Crawler {
     Map<String, Object> result = new HashMap<String, Object>();
 
     // Add status code and links to map
-    result.put("statusCode", statusCode);
+    result.put("statusCode", Integer.toString(statusCode));
     result.put("links", links);
 
     // Get HTML content
