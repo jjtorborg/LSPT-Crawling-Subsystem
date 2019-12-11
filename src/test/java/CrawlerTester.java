@@ -104,11 +104,11 @@ public final class CrawlerTester {
     //rpi related domain
     String input = readFileFromPathToString("src/test/tests/relevance_tests/relevanceTest1-1_input.json");
     String expected = readFileFromPathToString("src/test/tests/relevance_tests/relevanceTest1-1_output.json");
-    //assertCrawledUrlResponseEquals(input, expected);
+    assertCrawledUrlResponseEquals(input, expected);
 
     input = readFileFromPathToString("src/test/tests/relevance_tests/relevanceTest1-2_input.json");
     expected = readFileFromPathToString("src/test/tests/relevance_tests/relevanceTest1-2_output.json");
-    //assertCrawledUrlResponseEquals(input, expected);
+    assertCrawledUrlResponseEquals(input, expected);
 
     //non rpi related domain
     input = readFileFromPathToString("src/test/tests/relevance_tests/relevanceTest2-1_input.json");
@@ -128,7 +128,7 @@ public final class CrawlerTester {
     //links that lead to 404 errors
     String input = readFileFromPathToString("src/test/tests/validity_tests/invalidLinksTest1-1_input.json");
     String expected = readFileFromPathToString("src/test/tests/validity_tests/invalidLinksTest1-1_output.json");
-    //assertCrawledUrlResponseEquals(input, expected);
+    assertCrawledUrlResponseEquals(input, expected);
 
     input = readFileFromPathToString("src/test/tests/validity_tests/invalidLinksTest1-2_input.json");
     expected = readFileFromPathToString("src/test/tests/validity_tests/invalidLinksTest1-2_output.json");
@@ -144,5 +144,25 @@ public final class CrawlerTester {
     expected = readFileFromPathToString("src/test/tests/validity_tests/invalidTestLinks2-2_output.json");
     assertCrawledUrlResponseEquals(input, expected);
   }
+ 
+ /*
+  * Tests to make sure we are not 
+  * extracting images and email links
+  * 
+  */
+ 
+ @Test
+ public void testQuality () throws IOException {
+	 
+	 //links that contain email links
+	 String input = readFileFromPathToString("src/test/tests/quality_tests/emailLinks_input.json");
+	 String expected = readFileFromPathToString("src/test/tests/quality_tests/emailLinks_output.json");
+	 assertCrawledUrlResponseEquals(input, expected);
+	 
+	 //links that contain images
+	 input = readFileFromPathToString("src/test/tests/quality_tests/imgLinks_input.json");
+	 expected = readFileFromPathToString("src/test/tests/quality_tests/imgLinks_output.json");
+	 assertCrawledUrlResponseEquals(input, expected);
+ }
 
 }
