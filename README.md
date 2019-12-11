@@ -4,7 +4,7 @@ Team Crawl So Hard
 Interface methods (only one):
 
 public Map<String, Object> **crawlUrl**(String url);
-Method receiving the API caller input URL and constructing a Map<String, Object> that contains:
+* Method receiving the API caller input URL and constructing a Map<String, Object> that contains:
 
 * A list of outgoing links and the HTTP status code for the given URL. The list will not contain any links using the "mailto" URI scheme, i.e. any links of the form "mailto:example@<span></span>example.com". 
 * The list may contain "dead" links.
