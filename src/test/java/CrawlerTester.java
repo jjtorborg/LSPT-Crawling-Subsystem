@@ -50,12 +50,10 @@ public final class CrawlerTester {
 
   private void assertCrawledUrlResponseEquals(String url, String expected) throws IOException {
 	
-	System.out.println(url);
     Map<String,Object> crawlerResponse = crawler.crawlUrl(url);
     Gson gson = new Gson();
     String actual = gson.toJson(crawlerResponse);
     
-    System.out.println(actual);
     try {
       JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
     } catch (JSONException e) {
@@ -70,8 +68,8 @@ public final class CrawlerTester {
    *
    */
   
-  //@Test
-  /*public void testEthics() throws IOException {
+  @Test
+  public void testEthics() throws IOException {
     //links with permission restrictions
 	  
     String input = readFileFromPathToString("src/test/tests/ethics_tests/ethicsTest1-1_input.json");
@@ -91,7 +89,7 @@ public final class CrawlerTester {
     expected = readFileFromPathToString("src/test/tests/ethics_tests/ethicsTest2-2_output.json");
     assertCrawledUrlResponseEquals(input, expected);
 
-  }*/
+  }
 
   /*
    * CRAWL-8 test
