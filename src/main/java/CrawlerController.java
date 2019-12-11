@@ -14,7 +14,8 @@ public class CrawlerController {
   private static final int maxThreads = 8;
   private static int port;
 
-  private String recrawlURL = "lspt-TODO.cs.rpi.edu";
+  // further implementation would require an API recrawlURL
+  // private String recrawlURL = "";
 
   /**
    * Main process, which causes initialization of the Spark server and configures the PUT API
@@ -42,7 +43,6 @@ public class CrawlerController {
    * @return a string serialization of the JSON response
    */
   private static Map<String, Map<String, Object>> handleCrawlRequest(Request req) {
-
     Crawler c = new Crawler(DDSPutUrl);
     Gson gson = new Gson();
     String[] urls = gson.fromJson(req.body(), String[].class);
