@@ -1,7 +1,7 @@
 # LSPT-Crawling-Subsystem
 Team Crawl So Hard
 
-Interface methods (only one):
+### Interface method:
 
 public Map<String, Object> **crawlUrl**(String url);
 * Method receiving the API caller input URL and constructing a Map<String, Object> that contains:
