@@ -27,7 +27,7 @@ public class Crawler {
   }
 
   /**
-   * Method receiving the API caller input URL and constructing a Map<String, Object> that contains
+   * Method receiving the API caller input URL and constructing a Map&lt;String, Object&gt; that contains
    * a list of outgoing links and the HTTP status code for the given URL. The list will not contain
    * any links using the "mailto" URI scheme, i.e. any links of the form
    * "mailto:example@example.com". The list may contain "dead" links.
