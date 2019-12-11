@@ -139,6 +139,10 @@ public final class CrawlerTester {
     expected = readFileFromPathToString("src/test/tests/validity_tests/invalidTestLinks2-1_output.json");
     assertCrawledUrlResponseEquals(input, expected);
 
+    //garbage entered instead of links
+    input = readFileFromPathToString("src/test/tests/validity_tests/invalidLinksTest2-2_input.json");
+    expected = readFileFromPathToString("src/test/tests/validity_tests/invalidTestLinks2-2_output.json");
+    assertCrawledUrlResponseEquals(input, expected);
   }
 
 }
