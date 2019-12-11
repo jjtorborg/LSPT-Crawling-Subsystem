@@ -18,7 +18,7 @@ where `[jar-filename.jar]` is the filename of the `.jar` that Maven builds to. `
 All three command-line arguments must be provided, or the application will not start.
 
 ## Documentation
-To build the Javadocs, run `mvn javadoc:javadoc`.
+To rebuild the Javadocs on your own, run `mvn javadoc:javadoc`. Alternatively, visit the pre-built Javadocs at `LSPT-Crawling-Subsystem/apidocs/index-all.html`.
 
 ### Interface method:
 
